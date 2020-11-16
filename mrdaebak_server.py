@@ -4,7 +4,7 @@ from db_model.mysqldb_conn import conn_mysqldb
 app = Flask(__name__)
 
 @app.route('/')
-def hello() :
+def index() :
     return '<h1>Hello!!</h1>'
 
 
