@@ -2,7 +2,7 @@ from ..user_management import AccountManagenent as AM
 import hashlib
 import bcrypt
 from flask import Flask, jsonify, request, Blueprint
-from db_model.mysqldb_conn import conn_mysqldb
+from ..db_model.mysqldb_conn import conn_mysqldb
 
 signup_controller = Blueprint('signup_controller', __name__)
 
@@ -10,7 +10,7 @@ db_conn = conn_mysqldb()
 mds_db = db_conn.cursor()
 
 # 주석 처리된건 debugging용
-@app.route('/signin_db', methods=['POST'])
+@signup_controller.route('/signin_db', methods=['POST'])
 def signup():
     #print('in signup()')
     if request.method == 'POST':
@@ -22,7 +22,7 @@ def signup():
     #    user_id = request.form['user_id'], user_password = request.form['user_password'])
     return jsonify({'Success':success_signup, 'Message':message})
 
-@app.route('/duplicate_name', methods=['POST'])
+@signup_controller.route('/duplicate_name', methods=['POST'])
 def isAvailableName():
     #print('in isAvailableName()')
     if request.method == 'POST':                    #AccountManagenent 호출
@@ -34,7 +34,7 @@ def isAvailableName():
     return jsonify({'check_name_dup':check_dup, 'Message':message})
 
 
-@app.route('/duplicate_id', methods=['POST'])
+@signup_controller.route('/duplicate_id', methods=['POST'])
 def isAvailableId():
     #print('in isAvailableId()')
     if request.method == 'POST':                    #AccountManagenent 호출      

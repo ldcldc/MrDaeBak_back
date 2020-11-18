@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from db_model.mysqldb_conn import conn_mysqldb
+from ..db_model.mysqldb_conn import conn_mysqldb
 
 test_module = Blueprint('test_module', __name__)
 
