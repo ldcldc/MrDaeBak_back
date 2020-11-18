@@ -77,7 +77,7 @@ class AccountManagenent:
         if success_signup == 'true':                    #데이터 문제 없음
             password = bcrypt.hashpw(user_info['user_password'].encode('utf-8'),bcrypt.gensalt())   #비밀번호 hash
             #print(password)
-            sql = """INSERT INTO user_info (user_name, user_id, user_password) VALUES (%s, %s, %s);"""   #db에 저장
+            sql = """INSERT INTO user_info (user_name, user_id, password) VALUES (%s, %s, %s);"""   #db에 저장
             mds_db.execute(sql, (username, id, password))
             db_conn.commit() 
 
