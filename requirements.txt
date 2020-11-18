@@ -10,4 +10,4 @@ pycparser==2.20
 PyMySQL==0.10.1
 six==1.15.0
 Werkzeug==1.0.1
-hashlib==3.9.0
+hashlib==3.2.0
