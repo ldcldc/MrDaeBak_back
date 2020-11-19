@@ -1,5 +1,5 @@
 from flask import Flask, jsonify
-from flask-cors import CORS
+from flask_cors import CORS
 from pakages.db_model.mysqldb_conn import conn_mysqldb
 from pakages.router.test_module import test_module
 from pakages.router.SignupController import signup_controller
