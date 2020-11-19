@@ -36,5 +36,7 @@ def isAvailableId():
 
     if request.method == 'POST':                    #AccountManagenent 호출      
         message, check_dup = AM.AccountManagenent.findUserId(data['user_id'], mds_db)
+        # print(AM.AccountManagenent.findUserId(data['user_id'], mds_db))
     
     return jsonify({'check_id_dup':check_dup, 'Message':message})
+    
