@@ -43,4 +43,4 @@ def isAvailableId():
     #print(check_dup)
     #return render_template('signin_test.html', user_name = request.form['user_name'], \
     #    user_id = request.form['user_id'], user_password = request.form['user_password'], check_id_dup = check_dup)
-    return jsonify({'check_name_dup':check_dup, 'Message':message})
+    return jsonify({'check_id_dup':check_dup, 'Message':message})
