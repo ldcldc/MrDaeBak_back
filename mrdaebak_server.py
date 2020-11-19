@@ -6,7 +6,7 @@ from pakages.router.SignupController import signup_controller
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "1111"
-cors = CORS(app, resources={r"/api/*": {"origins": "https://mrdaebak.netlify.app"}})
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 app.register_blueprint(test_module)
 app.register_blueprint(signup_controller)
