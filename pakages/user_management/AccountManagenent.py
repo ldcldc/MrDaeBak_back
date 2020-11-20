@@ -1,11 +1,14 @@
 import hashlib
 import bcrypt
 from flask import Flask, jsonify, request
+from ..db_model.mysqldb_conn import conn_mysqldb
 
 class AccountManagenent:
     @staticmethod
-    def findUserName(username, mds_db):
-        #print('in findUserName()')
+    def findUserName(username):
+        db_conn = conn_mysqldb()
+        mds_db = db_conn.cursor()
+        
         message = ''                                #상황에 따른 메시지
         check_dup = 'true'                          #중복확인 성공 여부
 
@@ -24,13 +27,17 @@ class AccountManagenent:
 
             else:                                                   #안중복
                 message = 'available Name'
+        
+        db_conn.close()
 
         return [message] + [check_dup]                              #json으로 보낼 데이터 return
 
 
     @staticmethod
-    def findUserId(userid, mds_db):
-        #print('in findUserId()')
+    def findUserId(userid):
+        db_conn = conn_mysqldb()
+        mds_db = db_conn.cursor()
+
         message = ''                                #상황에 따른 메시지
         check_dup = 'true'                          #중복확인 성공 여부
 
@@ -49,12 +56,16 @@ class AccountManagenent:
             else:                                                   #안중복
                 message = 'available Id'
 
+        db_conn.close()
+
         return [message] + [check_dup]                              #json으로 보낼 데이터 return
 
 
     @staticmethod
-    def registerAccount(user_info, mds_db, db_conn):
-        #print('in registerAccount()')
+    def registerAccount(user_info):
+        db_conn = conn_mysqldb()
+        mds_db = db_conn.cursor()
+
         message = ''                                #상황에 따른 메시지
         success_signup = 'true'                     #회원가입 성공 여부
         
@@ -76,11 +87,13 @@ class AccountManagenent:
 
         if success_signup == 'true':                    #데이터 문제 없음
             password = bcrypt.hashpw(user_info['user_password'].encode('utf-8'),bcrypt.gensalt())   #비밀번호 hash
-            #print(password)
+            
             sql = """INSERT INTO user_info (user_name, user_id, password, class) VALUES (%s, %s, %s, 'member');"""   #db에 저장
             mds_db.execute(sql, (username, id, password))
             db_conn.commit() 
 
             message = 'Success signup'                  #회원가입 성공
         
+        db_conn.close()
+
         return [message] + [success_signup]
