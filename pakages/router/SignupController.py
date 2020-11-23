@@ -8,7 +8,7 @@ signup_controller = Blueprint('signup_controller', __name__)
 
 @signup_controller.route('/signin_db', methods=['POST'])
 def signup():
-    data = request.get_json()
+    data = request.form
 
     if request.method == 'POST':
         message, success_signup = AM.AccountManagenent.registerAccount(data)               
