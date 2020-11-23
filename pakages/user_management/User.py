@@ -36,13 +36,27 @@ class User(metaclass=ABCMeta):
 
 
 class Member(User):
-    def __init__(self, user_info):
-        self.id = user_info['user_id']
-        self.name = user_info['user_name']
-        self.classification = user_info['class']
-        self.address = user_info['address']
-        self.ordered_num = user_info['ordered_num']
+    def __init__(self, user_id):
+        db_conn = conn_mysqldb()
+        db_cursor = db_conn.cursor()
+        
+        sql = """
+                SELECT user_name, address, ordered_num, class
+                FROM user_info
+                WHERE user_id=%s
+                """
+        
+        db_cursor.execute(sql, user_id)
+        info = db_cursor.fetchone()
+
+        self.id = user_id
+        self.name = info[0]
+        self.address = info[1]
+        self.ordered_num = info[2]
         self.ordered_num_added = False
+        self.classification = info[3]
+
+        db_conn.close()
     
     def getOrderNum(self):
         return self.ordered_num
@@ -128,7 +142,21 @@ class Guest(User):
         db_conn.close()
 
 class Manager(User):
-    def __init__(self, user_info):
-        self.id = user_info['user_id']
-        self.name = user_info['user_name']
+    def __init__(self, user_id):
+        db_conn = conn_mysqldb()
+        db_cursor = db_conn.cursor()
+        
+        sql = """
+                SELECT user_name
+                FROM user_info
+                WHERE user_id=%s
+                """
+        
+        db_cursor.execute(sql, user_id)
+        info = db_cursor.fetchone()
+
+        self.id = user_id
+        self.name = info[0]
         self.classification = 'manager'
+
+        db_conn.close()
