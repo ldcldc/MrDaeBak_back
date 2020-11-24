@@ -1,9 +1,14 @@
-from pakages.user_management.User import Guest, Member, Manager
+from pakages.stock_management.StockManagement import StockManagement as SM
 
+stock = {
+    'st01': 60,
+    'br01': 60
+}
 
-m = Member('ote1111')
-print(m.getId())
-print(m.getName())
-print(m.getAddress())
-print(m.getClass())
-print(m.getOrderNum())
+datas = SM.getStock()
+for d in datas:
+    print(d)
+SM.setStock(stock)
+datas = SM.getStock()
+for d in datas:
+    print(d)
