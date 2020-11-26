@@ -4,6 +4,22 @@ import pymysql
 class StockManagement:
     @staticmethod
     def getStock(id=None):
+        """
+            id(menu_id) 값을 받지 않으면 전체 행을 반환
+            id가 있을 경우 해당하는 값만 반환
+
+            반환 형태
+            [
+                {
+                    menu_id: "..",
+                    menu_name: "..",
+                    stock: 0,
+                    note: "..",
+                }, {
+                    ...
+                }
+            ]
+        """
         db = conn_mysqldb()
         db_cursor = db.cursor()
 
@@ -37,19 +53,33 @@ class StockManagement:
         return datas
 
     @staticmethod
-    def setStock(curStocks: dict[str, str]): # [ [ menu_id, stock ] ]
+    def setStock(data: list[dict[str, str]]): 
+        """
+        인수 형태
+            [
+                {
+                    menu_id: "..",
+                    menu_name: "..",
+                    stock: 0,
+                    note: "..",
+                }, {
+                    ...
+                }
+            ]
+
+        """
         db = conn_mysqldb()
         db_cursor = db.cursor()
 
         sql = """
                 UPDATE menus
-                SET stock=%s
+                SET menu_name=%s, stock=%s, note=%s
                 WHERE menu_id=%s
                 """
 
-        for st in curStocks.items():
+        for d in data:
             try:
-                db_cursor.execute(sql, (str(st[1]), st[0]))
+                db_cursor.execute(sql, (d['menu_name'], str(d['stock']), d['note']))
             except pymysql.err.InternalError as e:
                 code, msg = e.args
                 print(code, msg)
