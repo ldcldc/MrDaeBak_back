@@ -68,6 +68,10 @@ class StockManagement:
             ]
 
         """
+        print(data)
+        if data is None:
+            return True
+
         db = conn_mysqldb()
         db_cursor = db.cursor()
 
@@ -79,7 +83,7 @@ class StockManagement:
 
         for d in data:
             try:
-                db_cursor.execute(sql, (d['menu_name'], str(d['stock']), d['note']))
+                db_cursor.execute(sql, (d['menu_name'], str(d['stock']), d['note'], d['menu_id']))
             except pymysql.err.InternalError as e:
                 code, msg = e.args
                 print(code, msg)

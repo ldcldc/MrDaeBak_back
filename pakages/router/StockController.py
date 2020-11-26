@@ -9,5 +9,6 @@ def getStockInfo():
 
 @stock_controller.route('/update', methods=['post'])
 def setStockInfo():
-    if SM.setStock(request.get_json()):
+    s = SM.setStock(request.get_json())
+    if s:
         return jsonify({ 'result' : 'success' })
